@@ -1,6 +1,6 @@
 module github.com/2785/beltmatic-calc
 
-go 1.22.3
+go 1.22
 
 require (
 	github.com/gammazero/deque v0.2.1
