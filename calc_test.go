@@ -62,6 +62,13 @@ func TestMath(t *testing.T) {
 			},
 			expected: "(9x8+1)x8",
 		},
+		{
+			target: 662,
+			sourceSet: []int{
+				1, 2, 3, 4, 5, 6, 7, 8, 9, 11,
+			},
+			expected: "(11x6x5+1)x2",
+		},
 	}
 
 	for _, tt := range tc {

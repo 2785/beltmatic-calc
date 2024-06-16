@@ -128,14 +128,17 @@ func findMostConvenientMadeUp(target int, sourceSet []int) []Op {
 		// didn't find it, generate new nodes
 		for _, v := range sourceSet {
 			// divide, add, subtract
-			if curr.val%v == 0 {
+			if curr.val%v == 0 && v != 1 {
 				// divide
 				newVal := curr.val / v
 				if _, ok := nodes[newVal]; !ok {
+					ops := make([]Op, len(curr.ops))
+					copy(ops, curr.ops)
+
 					// if it's already in there it's at equal or lower step count, don't need to do anything
 					n := node{
 						stepCount: curr.stepCount + 1,
-						ops:       append(curr.ops, MultiplicationOp{Num: v}),
+						ops:       append(ops, MultiplicationOp{Num: v}),
 						val:       newVal,
 					}
 
