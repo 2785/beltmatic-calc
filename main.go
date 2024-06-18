@@ -21,11 +21,11 @@ func c(e error) {
 var calcArgs = struct {
 	Goal        int
 	SourceSet   []int
-	operatorSet string
+	OperatorSet string
 }{
 	SourceSet: []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 11},
 	// div is stupid, let's not do div
-	operatorSet: "+-*^",
+	OperatorSet: "+-*^",
 }
 
 var calc = &cobra.Command{
@@ -38,7 +38,7 @@ var calc = &cobra.Command{
 
 		opSet := operatorSet{}
 
-		for _, c := range calcArgs.operatorSet {
+		for _, c := range calcArgs.OperatorSet {
 			switch c {
 			case '+':
 				opSet.add = true
