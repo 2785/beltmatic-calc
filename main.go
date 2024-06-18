@@ -19,10 +19,13 @@ func c(e error) {
 }
 
 var calcArgs = struct {
-	Goal      int
-	SourceSet []int
+	Goal        int
+	SourceSet   []int
+	operatorSet string
 }{
 	SourceSet: []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 11},
+	// div is stupid, let's not do div
+	operatorSet: "+-*^",
 }
 
 var calc = &cobra.Command{
@@ -33,7 +36,24 @@ var calc = &cobra.Command{
 			return
 		}
 
-		ops := findMostConvenientMadeUp(calcArgs.Goal, calcArgs.SourceSet)
+		opSet := operatorSet{}
+
+		for _, c := range calcArgs.operatorSet {
+			switch c {
+			case '+':
+				opSet.add = true
+			case '-':
+				opSet.sub = true
+			case '*':
+				opSet.mul = true
+			case '^':
+				opSet.exp = true
+			default:
+				panic(fmt.Sprintf("unknown operator: %c", c))
+			}
+		}
+
+		ops := findMostConvenientMadeUp(calcArgs.Goal, calcArgs.SourceSet, opSet)
 
 		fmt.Println(renderOps(ops))
 	},

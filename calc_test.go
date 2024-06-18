@@ -3,6 +3,7 @@ package main
 import (
 	"testing"
 
+	"github.com/samber/lo"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -42,6 +43,7 @@ func TestMath(t *testing.T) {
 		target    int
 		sourceSet []int
 		expected  string
+		opSet     *operatorSet
 	}{
 		{
 			target:    10,
@@ -60,19 +62,19 @@ func TestMath(t *testing.T) {
 			sourceSet: []int{
 				1, 2, 3, 4, 5, 6, 7, 8, 9, 11,
 			},
-			expected: "(9x8+1)x8",
+			expected: "(8x3)^2+8",
 		},
 		{
 			target: 662,
 			sourceSet: []int{
 				1, 2, 3, 4, 5, 6, 7, 8, 9, 11,
 			},
-			expected: "(11x6x5+1)x2",
+			expected: "(6^3+5)x3-1",
 		},
 	}
 
 	for _, tt := range tc {
-		ops := findMostConvenientMadeUp(tt.target, tt.sourceSet)
+		ops := findMostConvenientMadeUp(tt.target, tt.sourceSet, lo.FromPtrOr(tt.opSet, operatorSetAll))
 		actual := renderOps(ops)
 
 		assert.Equal(t, tt.expected, actual)
